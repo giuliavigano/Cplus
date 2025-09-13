@@ -1,42 +1,59 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main() {
+
+	Bureaucrat signer("Signer", 47);
+	ShrubberyCreationForm	testFormSh("Shrubbery creation");
+	RobotomyRequestForm		testFormRo("Robotomy request");
+	PresidentialPardonForm	testFormPr("Presidential pardon");
+
 	try {
-		Bureaucrat ceo("Bob", 1);
-		Bureaucrat	menager("Jack", 21);
-		Bureaucrat	intern("Daniel", 111);
-
-		Form form1("First", false, 5, 3);
-		Form form2("Second", false, 45, 34);
-
-		std::cout << form1 << std::endl;
-		std::cout << form2 << std::endl;
-
-		ceo.signForm(form1);
-		menager.signForm(form1);
-		intern.signForm(form2);
+		signer.signForm(testFormSh);
+		std::cout << "Complete form info (operator <<): " << testFormSh << std::endl;
 	}
 	catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n=== TEST GETTER AND OUTPUT===" << std::endl;
-	Form testForm("TestForm", false, 46, 24);
+	try {
+		signer.signForm(testFormRo);
+		std::cout << "Complete form info (operator <<): " << testFormRo << std::endl;
+	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
 
-	std::cout << "Form name: " << testForm.getFormName() << std::endl;
-	std::cout << "Is signed: " << (testForm.getSign() ? "true" : "false") << std::endl;
-	std::cout << "Sign grade: " << testForm.getSignGrade() << std::endl;
-	std::cout << "Exec grade: " << testForm.getExecGrade() << std::endl;
-	
-	std::cout << "Complete form info (operator<<): " << testForm << std::endl;
+	try {
+		signer.signForm(testFormPr);
+		std::cout << "Complete form info (operator <<): " << testFormPr << std::endl;
+	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
 
-	Bureaucrat signer("Signer", 39);
-	signer.signForm(testForm);
+	std::cout << signer.getName() << "should be able to sign Shrubbery and Robotomy form and only execute Shrubbery" << std::endl;
 
-	std::cout << "After signing:" << std::endl;
-	std::cout << "Is signed: " << (testForm.getSign() ? "yes" : "no") << std::endl;
-	std::cout << "Complete form info (operator <<): " << testForm << std::endl;
-	
+	try {
+		signer.executeForm(testFormSh);
+	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	try {
+		signer.executeForm(testFormRo);
+	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	try {
+		signer.executeForm(testFormPr);
+	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
 	return 0;
 }

@@ -1,5 +1,6 @@
 #include "PresidentialPardonForm.hpp"
 
+
 PresidentialPardonForm::PresidentialPardonForm() : AForm("Default Shrubbery", false, 25, 5), target("unknown") {
 	std::cout << "PresidentialPardonForm default contructor called." << std::endl;
 }
@@ -21,4 +22,12 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 
 PresidentialPardonForm::~PresidentialPardonForm() {
 	std::cout << "PresidentialPardonForm destructor called." << std::endl;
+}
+
+void	PresidentialPardonForm::execute(Bureaucrat const & executor) const {
+	if (!getSign())
+		throw AForm::FormNotSignedException();
+	if (executor.getGrade() > getExecGrade())
+		throw AForm::GradeTooLowException();
+	std::cout << this->target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }

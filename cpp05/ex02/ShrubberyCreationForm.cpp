@@ -24,5 +24,21 @@ ShrubberyCreationForm::~ShrubberyCreationForm () {
 }
 
 void	ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
-	executor.signForm
+	if (!getSign())
+		throw AForm::FormNotSignedException();
+	if (executor.getGrade() > getExecGrade())
+		throw AForm::GradeTooLowException();
+	std::ofstream file((this->target + "_shrubbery").c_str());
+	if (!file)
+		throw AForm::FileErrorException();
+	else {
+		file << "      /\\\n"
+			 << "     /  \\\n"
+			 << "    /++++\\\n"
+			 << "   /  ()  \\\n"
+			 << "  /________\\\n"
+			 << "     ||\n"
+			 << "     ||\n";
+		file.close();
+	}
 }
