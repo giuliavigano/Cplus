@@ -5,13 +5,16 @@
 #include <deque>
 #include <iostream>
 
-template<typename T, typename Container = std::deque<T>>
+template<typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container> {
 public:
-	typename Container::iterator	end();
-	typename Container::iterator	begin();
-	typename Container::const_iterator	end() const;
-	typename Container::const_iterator	begin() const;
+	typedef typename Container::iterator	iterator;
+	typedef typename Container::const_iterator	const_iterator;
+
+	iterator	end();
+	iterator	begin();
+	const_iterator	end() const;
+	const_iterator	begin() const;
 private:
 };
 
