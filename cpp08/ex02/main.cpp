@@ -1,8 +1,9 @@
 #include "MutantStack.hpp"
 #include <list>
 
-int main()
-{
+int main() {
+    std::cout << "\n=== MAIN FROM SUBJECT===" << std::endl;
+
     MutantStack<int> mstack;
     mstack.push(5);
     mstack.push(17);
@@ -23,12 +24,13 @@ int main()
     std::cout << *it << std::endl;
     ++it;
     }
-    std::stack<int> s(mstack);
+    std::stack<int> sM(mstack);
     return 0;
 }
 
-// int main()
-// {
+// int main() {
+//     std::cout << "\n=== MAIN WITH STD::LIST===" << std::endl;
+    
 //     std::list<int> mstack;
 //     mstack.push_back(5);
 //     mstack.push_back(17);
@@ -49,7 +51,6 @@ int main()
 //     std::cout << *it << std::endl;
 //     ++it;
 //     }
-//     std::list<int> s(mstack);
+//     std::list<int> sL(mstack);
 //     return 0;
 // }
-
