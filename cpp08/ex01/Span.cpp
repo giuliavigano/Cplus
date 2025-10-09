@@ -1,6 +1,7 @@
 #include "Span.hpp"
+#include <limits>
 
-Span::Span(unsigned int N) : _maxSize(N), _span() {}
+Span::Span(unsigned int N) : _maxSize(verifyN(N)), _span() {}
 
 Span::Span(const Span& value) : _maxSize(value._maxSize), _span(value._span) {}
 
@@ -44,4 +45,11 @@ unsigned int	Span::longestSpan() {
 	std::vector<int> sorting(_span);
 	std::sort(sorting.begin(), sorting.end());
 	return static_cast<unsigned int>(sorting.back() - sorting.front());
+}
+
+unsigned int	Span::verifyN(unsigned int n) {
+	if (n > static_cast<unsigned int>(std::numeric_limits<int>::max()))
+		throw NotAValidSizeOfElements();
+	else
+		return n;
 }

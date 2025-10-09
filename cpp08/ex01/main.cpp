@@ -4,6 +4,14 @@
 #include <vector>
 
 int	main() {
+
+	std::cout << "\n=== TEST NEGATIVE PARAMETER TO THE COSTRUCTOR===" << std::endl;
+	try {
+		Span	sp = Span(-5);
+	} catch (const Span::NotAValidSizeOfElements& e) {
+		std::cout << e.what() << std::endl;
+	}
+
 	std::cout << "\n=== TEST FROM SUBJECT===" << std::endl;
 	Span	sp = Span(5);
 

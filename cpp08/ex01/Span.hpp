@@ -29,6 +29,13 @@ public:
 		}
 	};
 	
+	class NotAValidSizeOfElements : std::exception {
+	public:
+		virtual const char* what() const throw() {
+			return "Parameter passed to the constructor must be valid, NOT a negative number!";
+		}
+	};
+
 	template<typename It>
 	void	addNumbers(It first, It last) {
 		for (; first != last; ++first) {
@@ -37,6 +44,8 @@ public:
 			_span.push_back(*first);
 		}
 	}
+
+	unsigned int	verifyN(unsigned int n);
 
 private:
 	unsigned int		_maxSize;
