@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 	} catch (const ErrorOpeningThisFile& e) {
 		std::cout << e.what() << std::endl;
 	}
-	std::map<std::string, float> exchangeValue = read_datacsv();
+	std::map<std::string, float> date_csv = read_datacsv();
 	std::string	line;
 	std::ifstream file(argv[1]);
 	getline(file, line);

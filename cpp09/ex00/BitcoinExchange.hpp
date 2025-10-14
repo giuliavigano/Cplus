@@ -3,36 +3,55 @@
 #include <map>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include <exception>
 
 
-class ErrorOpeningThisFile : std::exception {
+class BitcoinExchange {
 public:
-	virtual const char* what() const throw() {
-		return "Error: could not open this file!";
-	}
-};
+	BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange& value);
+	BitcoinExchange&	operator=(const BitcoinExchange& val);
+	~BitcoinExchange();
 
-class NotAValidNumber : std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "Error: not a positive number!";
-	}
-};
+	void	parse_input(const std::string& input);
+	float	get_exchange_value(const std::string& date);
 
-class NumberTooLarge : std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "Error: too large number (>1000) !";
-	}
-};
+	class ErrorOpeningThisFile : std::exception {
+	public:
+		virtual const char* what() const throw() {
+			return "Error: could not open this file!";
+		}
+	};
 
-class NotAValidDate : std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "Error: not a valid date!";
-	}
+	class NotAValidNumber : std::exception {
+	public:
+		virtual const char* what() const throw() {
+			return "Error: not a positive number!";
+		}
+	};
+
+	class NumberTooLarge : std::exception {
+	public:
+		virtual const char* what() const throw() {
+			return "Error: too large number (>1000) !";
+		}
+	};
+
+	class NotAValidDate : std::exception {
+	public:
+		virtual const char* what() const throw() {
+			return "Error: not a valid date!";
+		}
+	};
+
+private:
+	std::map<std::string, float>	database;
+
+	bool	isValidDate(const std::string& date);
+	double	isValidValue(double value);
+	std::string	findClosestDate(const std:;string& date);
 };
 
 #endif
