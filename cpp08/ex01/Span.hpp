@@ -6,7 +6,7 @@
 /*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 14:42:12 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/09 14:42:13 by gvigano          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:35:19 by gvigano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ public:
 	unsigned int	verifyN(unsigned int n);
 
 private:
+	Span();
+	
 	unsigned int		_maxSize;
 	std::vector<int>	_span;
 };
