@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 #include <exception>
 
 
@@ -28,7 +29,7 @@ public:
 	class NotAValidNumber : std::exception {
 	public:
 		virtual const char* what() const throw() {
-			return "Error: not a positive number!";
+			return "Error: not a valid number (must be a valid positive number)!";
 		}
 	};
 
@@ -50,8 +51,8 @@ private:
 	std::map<std::string, float>	database;
 
 	bool	isValidDate(const std::string& date);
-	double	isValidValue(double value);
-	std::string	findClosestDate(const std:;string& date);
+	bool	isValidValue(double value);
+	std::string	findClosestDate(const std::string& date);
 };
 
 #endif

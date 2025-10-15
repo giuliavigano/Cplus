@@ -18,15 +18,8 @@ std::map<std::string, float>	read_datacsv() {
 
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
-		std::cout << "We need only one input: file .txt !" << std::endl;
+		std::cout << "We need only one input: file.txt !" << std::endl;
 		return 1;
-	}
-	try {
-		std::ifstream input_file(argv[1]);
-		if (!input_file.is_open())
-			throw ErrorOpeningThisFile();
-	} catch (const ErrorOpeningThisFile& e) {
-		std::cout << e.what() << std::endl;
 	}
 	std::map<std::string, float> date_csv = read_datacsv();
 	std::string	line;
