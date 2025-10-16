@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/16 16:21:18 by gvigano           #+#    #+#             */
+/*   Updated: 2025/10/16 16:21:19 by gvigano          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 
 BitcoinExchange::BitcoinExchange() : database() {}
@@ -27,7 +39,7 @@ void	BitcoinExchange::loadDatabase() {
 		size_t	com = line.find(',');
 		if (com != std::string::npos) {
 			std::string date = line.substr(0, com);
-			float	value = std::stof(line.substr(com + 1));
+			float	value = std::atof(line.substr(com + 1));
 			database[date] = value;
 		}
 	}
@@ -43,14 +55,45 @@ float	BitcoinExchange::get_exchange_value(const std::string& date) {
 }
 
 std::string	BitcoinExchange::findClosestDate(const std::string& date) {
-	auto	it = database.lower_bound(date);
+	std::map<std::string, float>::iterator	it = database.lower_bound(date);
 	if (it == database.begin())
 		return "";
 	--it;
 	return it->first;
 }
 
-// GESTISCI WHITESPACE QUANDO VAI A DICHIARARE DATE E VALUE
+std::string	BitcoinExchange::trim(const std::string& value_str) {
+	size_t	start = value_str.find_first_not_of(" \t\r\n");
+	if (start == std::string::npos)
+		return "";
+	size_t end = value_str.find_last_not_of(" \t\r\n");
+	return value_str.substr(start, end - start + 1);
+}
+
+bool	BitcoinExchange::isValidNumberStr(const std::string& str_value) {
+	if (str_value.empty())
+		return false;
+	size_t i = 0;
+	if (str_value[0] == '+' || str_value[0] == '-') {
+		i = 1;
+		if (str_value.length() == 1)
+			return false;
+	}
+	bool	dot = false;
+	bool	digits = false;
+	for (; i < str_value.length(); ++i) {
+		if (str_value[i] == '.') {
+			if (dot)
+				return false;
+			dot = true;
+		} else if (std::isdigit(str_value[i])) {
+			digits = true;
+		} else 
+			return false;
+	}
+	return digits;
+}
+
 void	BitcoinExchange::parse_input(const std::string& input) {
 	std::ifstream input_file(input);
 	if (!input_file)
@@ -60,12 +103,17 @@ void	BitcoinExchange::parse_input(const std::string& input) {
 	while (getline(input_file, line)) {
 		size_t sep = line.find('|');
 		if (sep != std::string::npos) {
-			std::string date = line.substr(0, sep);
-			float value = std::stof(line.substr(sep + 1, line.length())); //DA TESTARE CON TRY CATCH PER STOF!
+			std::string date = trim(line.substr(0, sep));
 			if (!isValidDate(date)) {
 				std::cout << "Error: bad input => " << date << std::endl;
 				continue;
 			}
+			std::string	valueStr = trim(line.substr(sep + 1));
+			if (!isValidNumberStr(valueStr)) {
+				std::cout << "Error: not a positive number." << std::endl;
+				continue;
+			}
+			float	value = std::atof(valueStr);
 			if (!isValidValue(static_cast<double>(value))) {
 				if (value > 1000)
 					std::cout << "Error: too large a number." << std::endl;
@@ -99,7 +147,7 @@ bool	BitcoinExchange::isValidDate(const std::string& date) {
 	if (day.length() != 2 || !std::all_of(day.begin(), day.end(), [](char c){ return std::isdigit(static_cast<unsigned char>(c)); }) || day < "01" || day > "31")
 		return false;
 	if (month == "02" && day == "29") {
-		int y = std::stoi(year);
+		int y = std::atoi(year);
         if (!( (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0) ))
             return false;
 	}

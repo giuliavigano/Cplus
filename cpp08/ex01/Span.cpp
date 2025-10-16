@@ -6,7 +6,7 @@
 /*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 14:42:08 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/09 14:42:08 by gvigano          ###   ########.fr       */
+/*   Updated: 2025/10/16 15:24:54 by gvigano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,19 @@ unsigned int	Span::shortestSpan() {
 
 unsigned int	Span::longestSpan() {
 	if (_span.size() < 2)
-		throw SpanTooShort();
-	std::vector<int> sorting(_span);
-	std::sort(sorting.begin(), sorting.end());
-	return static_cast<unsigned int>(sorting.back() - sorting.front());
+ 		throw SpanTooShort();
+	int	max = *std::max_element(_span.begin(), _span.end());
+	int	min = *std::min_element(_span.begin(), _span.end());
+	return static_cast<unsigned int>(max - min);
 }
+
+// unsigned int	Span::longestSpan() {
+// 	if (_span.size() < 2)
+// 		throw SpanTooShort();
+// 	std::vector<int> sorting(_span);
+// 	std::sort(sorting.begin(), sorting.end());
+// 	return static_cast<unsigned int>(sorting.back() - sorting.front());
+// }
 
 unsigned int	Span::verifyN(unsigned int n) {
 	if (n > static_cast<unsigned int>(std::numeric_limits<int>::max()))

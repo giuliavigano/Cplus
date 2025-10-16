@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/16 16:21:12 by gvigano           #+#    #+#             */
+/*   Updated: 2025/10/16 16:21:13 by gvigano          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 #include <map>
 #include <string>
+#include <cstdlib>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -53,7 +66,9 @@ private:
 
 	bool	isValidDate(const std::string& date);
 	bool	isValidValue(double value);
+	bool	isValidNumberStr(const std::string& str_value);
 	std::string	findClosestDate(const std::string& date);
+	std::string	trim(const std::string& value_str);
 };
 
 #endif

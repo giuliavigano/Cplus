@@ -6,13 +6,14 @@
 /*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 14:42:12 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/14 11:35:19 by gvigano          ###   ########.fr       */
+/*   Updated: 2025/10/16 15:23:12 by gvigano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPAN_HPP
 # define SPAN_HPP
 #include <vector>
+#include <limits>
 #include <algorithm>
 #include <exception>
 
