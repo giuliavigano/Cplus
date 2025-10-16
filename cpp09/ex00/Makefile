@@ -6,7 +6,7 @@ CXXFLAGS		= -Wall -Wextra -Werror -std=c++98
 SRC				= main.cpp \
 					BitcoinExchange.cpp
 
-OBJ				= $(NAME:.cpp=.o)
+OBJ				= $(SRC:.cpp=.o)
 
 all: $(NAME)
 
