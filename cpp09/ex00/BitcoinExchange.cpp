@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*   By: giuliaviga <giuliaviga@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:21:18 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/16 16:21:19 by gvigano          ###   ########.fr       */
+/*   Updated: 2025/10/17 11:04:05 by giuliaviga       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	BitcoinExchange::loadDatabase() {
 		size_t	com = line.find(',');
 		if (com != std::string::npos) {
 			std::string date = line.substr(0, com);
-			float	value = std::atof(line.substr(com + 1));
+			float	value = std::atof((line.substr(com + 1)).c_str());
 			database[date] = value;
 		}
 	}
@@ -95,7 +95,7 @@ bool	BitcoinExchange::isValidNumberStr(const std::string& str_value) {
 }
 
 void	BitcoinExchange::parse_input(const std::string& input) {
-	std::ifstream input_file(input);
+	std::ifstream input_file(input.c_str());
 	if (!input_file)
 		throw ErrorOpeningThisFile();
 	std::string	line;
@@ -113,15 +113,15 @@ void	BitcoinExchange::parse_input(const std::string& input) {
 				std::cout << "Error: not a positive number." << std::endl;
 				continue;
 			}
-			float	value = std::atof(valueStr);
-			if (!isValidValue(static_cast<double>(value))) {
+			double	value = std::atof(valueStr.c_str());
+			if (!isValidValue(value)) {
 				if (value > 1000)
 					std::cout << "Error: too large a number." << std::endl;
 				else
 					std::cout << "Error: not a positive number." << std::endl;
 				continue;
 			}
-			std::cout << date << " => " << value << " = " << value * get_exchange_value(date) << std::endl;
+			std::cout << date << " => " << value << " = " << value * static_cast<double>(get_exchange_value(date)) << std::endl;
 		} else {
 			std::cout << "Error: bad input => " << line << std::endl;
 			continue;
@@ -130,24 +130,33 @@ void	BitcoinExchange::parse_input(const std::string& input) {
 	return;
 }
 
+bool	BitcoinExchange::isAllDigits(const std::string& str) {
+	std::string::const_iterator	it;
+	for (it = str.begin(); it != str.end(); ++it) {
+		if (!std::isdigit(static_cast<unsigned char>(*it)))
+			return false;	
+	}
+	return true;
+}
+
 bool	BitcoinExchange::isValidDate(const std::string& date) {
 
 	if (date.length() != 10)
 		return false;
 	size_t	sep_y = date.find('-');
 	std::string	year = date.substr(0, sep_y);
-	if (year.length() != 4 || !std::all_of(year.begin(), year.end(), [](char c){ return std::isdigit(static_cast<unsigned char>(c)); }) || year > "2025" || year < "2009")
+	if (year.length() != 4 || !isAllDigits(year) || year > "2025" || year < "2009")
 		return false;
 	std::string _date = date.substr(sep_y + 1, date.length());
 	size_t	sep_m = _date.find('-');
 	std::string	month = _date.substr(0, sep_m);
-	if (month.length() != 2 || !std::all_of(month.begin(), month.end(), [](char c){ return std::isdigit(static_cast<unsigned char>(c)); }) || month < "01" || month > "12")
+	if (month.length() != 2 || !isAllDigits(month) || month < "01" || month > "12")
 		return false;
 	std::string day = _date.substr(sep_m + 1, date.length());
-	if (day.length() != 2 || !std::all_of(day.begin(), day.end(), [](char c){ return std::isdigit(static_cast<unsigned char>(c)); }) || day < "01" || day > "31")
+	if (day.length() != 2 || !isAllDigits(day) || day < "01" || day > "31")
 		return false;
 	if (month == "02" && day == "29") {
-		int y = std::atoi(year);
+		int y = std::atoi(year.c_str());
         if (!( (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0) ))
             return false;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*   By: giuliaviga <giuliaviga@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:21:12 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/16 16:21:13 by gvigano          ###   ########.fr       */
+/*   Updated: 2025/10/17 10:58:28 by giuliaviga       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ private:
 
 	bool	isValidDate(const std::string& date);
 	bool	isValidValue(double value);
+	bool	isAllDigits(const std::string& str);
 	bool	isValidNumberStr(const std::string& str_value);
 	std::string	findClosestDate(const std::string& date);
 	std::string	trim(const std::string& value_str);
