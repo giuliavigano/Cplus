@@ -6,7 +6,7 @@
 /*   By: giuliaviga <giuliaviga@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:21:12 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/17 10:58:28 by giuliaviga       ###   ########.fr       */
+/*   Updated: 2025/10/17 16:00:36 by giuliaviga       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,6 @@ public:
 	void	loadDatabase();
 	void	parse_input(const std::string& input);
 	float	get_exchange_value(const std::string& date);
-
-	class ErrorOpeningThisFile : std::exception {
-	public:
-		virtual const char* what() const throw() {
-			return "Error: could not open file.";
-		}
-	};
-
-	// class NotAValidNumber : std::exception {
-	// public:
-	// 	virtual const char* what() const throw() {
-	// 		return "Error: not a valid number (must be a valid positive number)!";
-	// 	}
-	// };
-
-	// class NumberTooLarge : std::exception {
-	// public:
-	// 	virtual const char* what() const throw() {
-	// 		return "Error: too large number (>1000) !";
-	// 	}
-	// };
-
-	// class NotAValidDate : std::exception {
-	// public:
-	// 	virtual const char* what() const throw() {
-	// 		return "Error: not a valid date!";
-	// 	}
-	// };
 
 private:
 	std::map<std::string, float>	database;

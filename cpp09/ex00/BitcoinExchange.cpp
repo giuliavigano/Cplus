@@ -6,7 +6,7 @@
 /*   By: giuliaviga <giuliaviga@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:21:18 by gvigano           #+#    #+#             */
-/*   Updated: 2025/10/17 11:04:05 by giuliaviga       ###   ########.fr       */
+/*   Updated: 2025/10/17 16:03:11 by giuliaviga       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	BitcoinExchange::isValidValue(double value) {
 void	BitcoinExchange::loadDatabase() {
 	std::ifstream dataFile("data.csv");
 	if (!dataFile)
-		throw ErrorOpeningThisFile();
+		std::cout << "Error: could not open file." << std::endl;
 	std::string	line;
 	getline(dataFile, line);
 	while (getline(dataFile, line)) {
@@ -97,7 +97,7 @@ bool	BitcoinExchange::isValidNumberStr(const std::string& str_value) {
 void	BitcoinExchange::parse_input(const std::string& input) {
 	std::ifstream input_file(input.c_str());
 	if (!input_file)
-		throw ErrorOpeningThisFile();
+		std::cout << "Error: could not open file." << std::endl;
 	std::string	line;
 	getline(input_file, line);
 	while (getline(input_file, line)) {
