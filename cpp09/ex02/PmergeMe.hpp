@@ -21,7 +21,6 @@ public:
     void    displayAfter();
     void    fordJohnsonSortDeque();
     void    fordJohnsonSortVector();
-   
 
 private:
     std::vector<int>    origin;
@@ -31,7 +30,7 @@ private:
     std::deque<int>     winnersDeque;
     std::deque<int>     losersDeque;
     std::vector<int>    losersVector;
-    std::vector<int>    winnersVector:
+    std::vector<int>    winnersVector;
 
     void    pairElementDeque();
     void    pairElementVector();
@@ -42,7 +41,7 @@ private:
 
     bool                isValidNumber(const std::string& str);
     std::vector<size_t> generateJacobsthalSequence(size_t maxElements);
-    std::vector<size_t> generateInsertionOrder(size_t pendingCount);
+    std::vector<size_t> generateInsertionOrder(size_t count);
 };
 
 #endif

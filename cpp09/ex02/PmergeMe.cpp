@@ -14,6 +14,62 @@ PmergeMe&   PmergeMe::operator=(const PmergeMe& val) {
 
 PmergeMe::~PmergeMe() {}
 
+std::vector<size_t>		PmergeMe::generateJacobsthalSequence(size_t maxElements) {
+	std::vector<size_t>	jecobsthal;
+
+	if (maxElements == 0)
+		return jecobsthal;
+	jecobsthal.push_back(1);
+	if (maxElements == 1)
+		return jecobsthal;
+	jecobsthal.push_back(1);
+	if (maxElements == 2)
+		return jecobsthal;
+	size_t	previous1 = 1;
+	size_t	previous2 = 1;
+	while (true) {
+		size_t	next = previous1 + 2 * previous2;
+		if (next > maxElements)
+			break;
+		jecobsthal.push_back(next);
+		previous2 = previous1;
+		previous1 = next;
+	}
+	return jecobsthal;
+}
+
+std::vector<size_t>		PmergeMe::generateInsertionOrder(size_t count) {
+	std::vector<size_t>	order;
+
+	if (count == 0)
+		return order;
+	std::vector<size_t>	jacobsthal = generateJacobsthalSequence(count);
+
+	std::vector<bool>	inserted(count, false);
+
+	if (count > 0) {
+		order.push_back(0);
+		inserted[0] = true;
+	}
+	for (size_t i = 1; i < jacobsthal.size(); ++i) {
+		size_t	jacobsCurrent = jacobsthal[i];
+		size_t	jacobsPrevious = jacobsthal[i - 1];
+		if (jacobsCurrent >= count)
+			jacobsCurrent = count - 1;
+		for(size_t j = jacobsCurrent; j > jacobsPrevious; --j) {
+			if (j < count && !inserted[j]) {
+				order.push_back(j);
+				inserted[j] = true;
+			}
+		}
+	}
+	for (size_t i = 0; i < count; ++i) {
+		if (!inserted[i])
+			order.push_back(i);
+	}
+	return order;
+}
+
 bool    PmergeMe::isValidNumber(const std::string& value) {
     size_t i = 0;
     if (value.empty())
