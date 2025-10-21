@@ -1,9 +1,11 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
+#include <ctime>
 #include <deque>
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iomanip>
 #include <algorithm>
 #include <iostream>
 
@@ -17,8 +19,9 @@ public:
     bool    parseInput(int argc, char *argv[]);
     void    sortWithDeque();
     void    sortWithVector();
-    void    displayBefore();
+    void    displayTime();
     void    displayAfter();
+    void    displayBefore();
     void    fordJohnsonSortDeque();
     void    fordJohnsonSortVector();
 
@@ -26,6 +29,9 @@ private:
     std::vector<int>    origin;
     std::deque<int>     deq;
     std::vector<int>    vec;
+
+    double              timeDeque;
+    double              timeVector;
 
     std::deque<int>     winnersDeque;
     std::deque<int>     losersDeque;

@@ -1,41 +1,82 @@
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe() : deq(), vec() {}
+PmergeMe::PmergeMe() : origin(), deq(), vec(), timeDeque(), timeVector(), winnersDeque(), losersDeque(), losersVector(), winnersVector() {}
 
-PmergeMe::PmergeMe(const PmergeMe& value) : deq(value.deq), vec(value.vec) {}
+PmergeMe::PmergeMe(const PmergeMe& value) : origin(value.origin), deq(value.deq), vec(value.vec), timeDeque(value.timeDeque), timeVector(value.timeVector), winnersDeque(value.winnersDeque), losersDeque(value.losersDeque), losersVector(value.losersVector), winnersVector(value.winnersVector) {}
 
 PmergeMe&   PmergeMe::operator=(const PmergeMe& val) {
     if (this != &val) {
+        this->origin = val.origin;
         this->deq = val.deq;
         this->vec = val.vec;
+        this->timeDeque = val.timeDeque;
+        this->timeVector = val.timeVector;
+        this->winnersDeque = val.winnersDeque;
+        this->losersDeque = val.losersDeque;
+        this->losersVector = val.losersVector;
+        this->winnersVector = val.winnersVector;
     }
     return *this;
 }
 
 PmergeMe::~PmergeMe() {}
 
+void    PmergeMe::displayTime() {
+    std::cout << "Time to process a range of " << deq.size() << " elements with std::deque : " << timeDeque << " us" << std::endl;
+    std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << timeVector << " us" << std::endl;
+}
+
+void    PmergeMe::displayBefore() {
+    std::cout << "Before: ";
+    for (size_t i = 0; i < origin.size(); ++i) {
+        if (i == origin.size() - 1)
+            std::cout << origin[i] << std::endl;
+        else
+            std::cout << origin[i] << " ";
+    }
+}
+
+void    PmergeMe::displayAfter() {
+    std::cout << "After: ";
+     if (vec.empty()) {
+        for (size_t i = 0; i < deq.size(); ++i) {
+            if (i == deq.size() - 1)
+                std::cout << deq[i] << std::endl;
+            else
+                std::cout << deq[i] << " ";
+        }
+    } else {
+         for (size_t i = 0; i < vec.size(); ++i) {
+            if (i == vec.size() - 1)
+                std::cout << vec[i] << std::endl;
+            else
+                std::cout << vec[i] << " ";
+        }
+    }
+}
+
 std::vector<size_t>		PmergeMe::generateJacobsthalSequence(size_t maxElements) {
-	std::vector<size_t>	jecobsthal;
+	std::vector<size_t>	jacobsthal;
 
 	if (maxElements == 0)
-		return jecobsthal;
-	jecobsthal.push_back(1);
+		return jacobsthal;
+	jacobsthal.push_back(1);
 	if (maxElements == 1)
-		return jecobsthal;
-	jecobsthal.push_back(1);
+		return jacobsthal;
+	jacobsthal.push_back(1);
 	if (maxElements == 2)
-		return jecobsthal;
+		return jacobsthal;
 	size_t	previous1 = 1;
 	size_t	previous2 = 1;
 	while (true) {
 		size_t	next = previous1 + 2 * previous2;
 		if (next > maxElements)
 			break;
-		jecobsthal.push_back(next);
+		jacobsthal.push_back(next);
 		previous2 = previous1;
 		previous1 = next;
 	}
-	return jecobsthal;
+	return jacobsthal;
 }
 
 std::vector<size_t>		PmergeMe::generateInsertionOrder(size_t count) {
@@ -71,12 +112,11 @@ std::vector<size_t>		PmergeMe::generateInsertionOrder(size_t count) {
 }
 
 bool    PmergeMe::isValidNumber(const std::string& value) {
-    size_t i = 0;
     if (value.empty())
         return false;
     if (value[0] == '-' || value[0] == '+')
        return false;
-    for (i; i < value.length(); ++i) {
+    for (size_t i = 0; i < value.length(); ++i) {
         if (value[i] < '0' || value[i] > '9')
             return false;
     }
@@ -167,9 +207,12 @@ void    PmergeMe::fordJohnsonSortDeque() {
 }
 
 void    PmergeMe::sortWithDeque() {
+    clock_t start = clock();
     for (size_t i = 0; i < origin.size(); ++i)
         deq.push_back(origin[i]);
     fordJohnsonSortDeque();
+    clock_t end = clock();
+    timeDeque = ((double) end - start) / CLOCKS_PER_SEC * 1000.0;
 }
 
 void    PmergeMe::pairElementVector() {
@@ -234,7 +277,10 @@ void    PmergeMe::fordJohnsonSortVector() {
 }
 
 void    PmergeMe::sortWithVector() {
+    clock_t start = clock();
     for (size_t i = 0; i < origin.size(); ++i)
         vec.push_back(origin[i]);
     fordJohnsonSortVector();
+    clock_t end = clock();    
+    timeVector = ((double) end - start) / CLOCKS_PER_SEC * 1000.0;
 }
