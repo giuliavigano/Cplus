@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:06:38 by gvigano           #+#    #+#             */
+/*   Updated: 2025/10/22 12:06:39 by gvigano          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe() : origin(), deq(), vec(), timeDeque(), timeVector(), winnersDeque(), losersDeque(), losersVector(), winnersVector() {}

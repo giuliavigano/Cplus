@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RPN.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvigano <gvigano@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:03:49 by gvigano           #+#    #+#             */
+/*   Updated: 2025/10/22 12:03:50 by gvigano          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "RPN.hpp"
 
 RPN::RPN() : expression() {}
@@ -45,24 +57,28 @@ void		RPN::evaluate(const std::string& input) {
 					std::cout << "Error: insufficient operands." << std::endl;
 					return;
 				}
-				int	b = expression.top();
-				expression.pop();
-				int	a = expression.top();
-				expression.pop();
+				int	b = expression.back();
+				expression.pop_back();
+				int	a = expression.back();
+				expression.pop_back();
 				if (token[0] == '/' && b == 0) {
 					std::cout << "Error: division by zero." << std::endl;
 					return;
 				}
-				expression.push(calculate(a, b , token[0]));
+				expression.push_back(calculate(a, b , token[0]));
 				continue;
 			}
 			else if (isDigit(token[0]) && std::atoi(token.c_str()) < 10 ) {
-				expression.push(std::atoi(token.c_str()));
+				expression.push_back(std::atoi(token.c_str()));
 				continue;
 			}
 			std::cout << "Error: bad input." << std::endl;
 			continue;
 		}
 	}
-	std::cout << expression.top() << std::endl;
+	if (expression.size() != 1) {
+		std::cout << "Error: invalid expression." << std::endl;
+		return;
+	}
+	std::cout << expression.back() << std::endl;
 }
